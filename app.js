@@ -12,19 +12,19 @@ function renderFeaturedSection(articles, category) {
     let featuredNews = document.querySelector('#featuredNews');
     featuredNews.innerHTML = "";
     featuredNews.innerHTML += `
-        <article class="main-featured" onclick="window.open('${articles[0].url}', '_blank')">
-            <img src="${articles[0].image}" alt="Featured News">
-            <div class="main-featured-content">
-                <span class="news-category">${category}</span>
-                <h2 class="news-title">${articles[0].title}</h2>
-                <div class="news-meta">
-                    <span>By ${articles[0].source.name}</span>
-                    <span>2 hours ago</span>
-                </div>
+    <article class="main-featured" onclick="window.open('${articles[0].url}', '_blank')">
+        <img src="${articles[0].image}" alt="Featured News">
+        <div class="main-featured-content">
+            <span class="news-category">${category}</span>
+            <h2 class="news-title">${articles[0].title}</h2>
+            <div class="news-meta">
+                <span>By ${articles[0].source.name}</span>
+                <span>2 hours ago</span>
             </div>
-        </article>
-        <div class="side-featured" id="sideFeatured">
         </div>
+    </article>
+    <div class="side-featured" id="sideFeatured">
+    </div>
     `;
     let sideFeatured = document.getElementById('sideFeatured');
     sideFeatured.innerHTML = "";
@@ -66,30 +66,10 @@ function renderCards(articles, times, category) {
     }
 }
 
+let heroSection = document.querySelector('#hero');
 
-// const apiKey = '9eca228010cb4289a16860fc8d9877db';
-// const apiKey = '182b1ca07013422f8261831bfc5a25e8';
-
-// fetch(proxyURL)
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log(data);
-//         // renderCards(data.articles, 9, 'Sports');
-//         // data.articles.forEach(article => {});
-//     })
-//     .catch(err => console.error('Error:', err))
-
-    //   You must activate your account to use the API. If you did not receive the email to activate your account, you can request a new one here: https://gnews.io/dashboard"
-    //   length
-
-    // Platzi Fake Store API
-
-    // changeCategory('Home');
-
-    let heroSection = document.querySelector('#hero');
-
-    const allTabs = document.querySelectorAll('#navMenu a');
-    allTabs[0].classList.add('active');
+const allTabs = document.querySelectorAll('#navMenu a');
+allTabs[0].classList.add('active');
 
 function changeCategory(curr) {
     let category = curr.textContent;
@@ -111,8 +91,8 @@ function changeCategory(curr) {
 renderHeroSection();
 
 function renderHeroSection() {
-        heroSection.innerHTML = `
-        <section class="hero" id="hero">
+    heroSection.innerHTML = `
+    <section class="hero" id="hero">
         <div class="container">
             <div class="hero-content">
                 <h1>Stay Informed with the Latest News</h1>
@@ -132,7 +112,6 @@ function getURL(category) {
     // let category = "business";
 
     category = category.toLowerCase();
-    console.log(category);
 
     // let url = 'https://gnews.io/api/v4/top-headlines?category=' + category + '&lang=en&country=pak&max=10&apikey=' + apiKey;
     let url = 'https://gnews.io/api/v4/top-headlines?category=' + category + '&lang=en&country=us&max=10&apikey=' + apiKey;
@@ -144,10 +123,8 @@ function getURL(category) {
     return url;
 }
 
-// const URL = 'https://jsonplaceholder.typicode.com/todos/';
 const URL = getURL("sports");
 
-// getData(URL);
 getData(URL, "Sports");
 
 async function getData(URL, category) {
