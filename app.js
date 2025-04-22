@@ -1,6 +1,4 @@
 
-console.log("Hello World!");
-
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const navMenu = document.getElementById('navMenu');
 
@@ -43,7 +41,7 @@ function renderFeaturedSection(articles, category) {
     }
 }
 
-function renderCards(articles, times, category) {
+function renderCards(articles, category) {
     let newsGrid = document.querySelector('#news-grid');
     newsGrid.innerHTML = "";
     for(let i = 4; i <= 9; i++) {
@@ -71,6 +69,9 @@ let heroSection = document.querySelector('#hero');
 const allTabs = document.querySelectorAll('#navMenu a');
 allTabs[0].classList.add('active');
 
+let cat = "Sports";
+let count = "us";
+
 function changeCategory(curr) {
     let category = curr.textContent;
     if (curr == "Home" || curr.textContent == "Home") {
@@ -81,9 +82,10 @@ function changeCategory(curr) {
         heroSection.innerHTML = "";
         heroSection.className = "section";
     }
-    let url = getURL(category);
-    getData(url, category);
-    
+    let k = getKey(2);
+    let url = getURL(category, count, k);
+    getData(url, category.slice(0,1).toUpperCase() + category.slice(1));
+    cat = category;
     allTabs.forEach(tab => tab.classList.remove('active'));
     curr.classList.add('active');
 }
@@ -104,33 +106,50 @@ function renderHeroSection() {
     `;
 }
 
-function getURL(category) {
-    // const apiKey = '57e0c4edb06ebe07bc2f0bc5038833fe'; // 1st
-    const apiKey = '990d1d3ee0ae548225337c78af36c79d'; // 2nd
-    // const apiKey = '2bd652ee5055f3315739af5f3761d77d'; // 3rd
+function getKey(num) {
+    const apiKeys = [
+        '57e0c4edb06ebe07bc2f0bc5038833fe',
+        '990d1d3ee0ae548225337c78af36c79d',
+        '2bd652ee5055f3315739af5f3761d77d',
+        '3a65f28e0ea1151cc16e2f50805543f7'
+    ];
+    return apiKeys[num];
+}
 
-    // let category = "business";
-
+function getURL(category, country, apiKey) {
+    cat = category;
     category = category.toLowerCase();
 
-    // let url = 'https://gnews.io/api/v4/top-headlines?category=' + category + '&lang=en&country=pak&max=10&apikey=' + apiKey;
-    let url = 'https://gnews.io/api/v4/top-headlines?category=' + category + '&lang=en&country=us&max=10&apikey=' + apiKey;
-
-    const gnewsURL = `https://gnews.io/api/v4/top-headlines?token=${apiKey}&lang=en&max=10`;
-
-    const proxyURL = `https://api.allorigins.win/raw?url=${encodeURIComponent(gnewsURL)}`;
+    let url = 'https://gnews.io/api/v4/top-headlines?category=' + category + '&lang=en&country=' + country + '&max=10&apikey=' + apiKey;
 
     return url;
 }
 
-const URL = getURL("sports");
+let key = getKey(0);
 
-getData(URL, "Sports");
+const URL = getURL("sports", count, key);
+
+getData(URL, cat.slice(0,1).toUpperCase() + cat.slice(1));
 
 async function getData(URL, category) {
     let response = await fetch(URL);
     let data = await response.json();
-    console.log(data);
     renderFeaturedSection(data.articles, category);
-    renderCards(data.articles, 5, category);
+    renderCards(data.articles, category);
+}
+
+function handleCountryChange(select) {
+    let value = select.value;
+    for(let i = 0; i < allTabs.length; i++) {
+        if (allTabs[i].classList.value == "active") {
+            cat = allTabs[i].innerHTML;
+        }
+    }
+    if (cat == "Home") {
+        cat = "sports";
+    }
+    count = value;
+    let apiKey = getKey(1);
+    let url = getURL(cat, value, apiKey);
+    getData(url, cat.slice(0,1).toUpperCase() + cat.slice(1));
 }

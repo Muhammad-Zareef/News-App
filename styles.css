@@ -83,6 +83,18 @@ nav ul li a:hover {
     color: var(--secondary-color);
 }
 
+.selectMenu {
+    color: white;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.4rem;
+    background-color: var(--primary-color);
+}
+
+.selectMenu option {
+    color: white;
+    /* background-color: var(--secondary-color); */
+}
+
 .mobile-menu-btn {
     display: none;
     background: none;
