@@ -135,7 +135,6 @@ async function getData(URL, category) {
     try {
         const response = await fetch(URL);
         const data = await response.json();
-        console.log(data);
         renderFeaturedSection(data.articles, category);
         renderCards(data.articles, category);
     } catch (error) {
