@@ -17,7 +17,7 @@ function renderFeaturedSection(articles, category) {
             <h2 class="news-title">${articles[0].title}</h2>
             <div class="news-meta">
                 <span>By ${articles[0].source.name}</span>
-                <span>2 hours ago</span>
+                <span>${new Date(articles[0].publishedAt).toDateString()}</span>
             </div>
         </div>
     </article>
@@ -56,7 +56,7 @@ function renderCards(articles, category) {
             <p class="news-excerpt">${articles[i].description}</p>
             <div class="news-meta">
                 <span>By ${articles[i].source.name}</span>
-                <span>5 hours ago</span>
+                <span>${new Date(articles[i].publishedAt).toDateString()}</span>
             </div>
         </div>
     </article>
@@ -132,10 +132,15 @@ const URL = getURL("sports", count, key);
 getData(URL, cat.slice(0,1).toUpperCase() + cat.slice(1));
 
 async function getData(URL, category) {
-    let response = await fetch(URL);
-    let data = await response.json();
-    renderFeaturedSection(data.articles, category);
-    renderCards(data.articles, category);
+    try {
+        const response = await fetch(URL);
+        const data = await response.json();
+        console.log(data);
+        renderFeaturedSection(data.articles, category);
+        renderCards(data.articles, category);
+    } catch (error) {
+        console.log('Error: ', error);
+    }
 }
 
 function handleCountryChange(select) {
