@@ -108,9 +108,9 @@ function renderHeroSection() {
 
 function getKey(num) {
     const apiKeys = [
-        '57e0c4edb06ebe07bc2f0bc5038833fe',
-        '990d1d3ee0ae548225337c78af36c79d',
-        '2bd652ee5055f3315739af5f3761d77d',
+        '5a4578c67778a767a69a09ee5d31f4c1',
+        '8598e46c17f0f84fa83416b68fb80064',
+        '92fd1b6f572f0210fd0cb313e0a4d6a9',
         '3a65f28e0ea1151cc16e2f50805543f7'
     ];
     return apiKeys[num];
